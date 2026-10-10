@@ -10,9 +10,16 @@ This component supports Bluetooth Classic SPP, not BLE/GATT or other Bluetooth p
 - Bluetooth Classic, Bluedroid, and SPP enabled in the ESP32 framework configuration.
 - Only one `classic_bt` instance per ESP32. The ESP-IDF SPP callback is routed through a singleton.
 
-For ESPHome configurations that need explicit Classic Bluetooth settings:
+## ESP32 setup and build flags
+
+Enable Classic Bluetooth, Bluedroid, and SPP in the framework, and pass the Classic/SPP compile-time defines under `esphome.build_flags`:
 
 ```yaml
+esphome:
+  build_flags:
+    - "-DCONFIG_BT_CLASSIC_ENABLED=1"
+    - "-DCONFIG_BT_SPP_ENABLED=1"
+
 esp32:
   framework:
     type: arduino
@@ -21,6 +28,13 @@ esp32:
       CONFIG_BT_BLUEDROID_ENABLED: "y"
       CONFIG_BT_SPP_ENABLED: "y"
 ```
+
+These settings are complementary: `sdkconfig_options` enables the ESP-IDF features, while the two `build_flags` define the corresponding compile-time macros.
+
+The following flags are optional and are not required by this component:
+
+- `-DUSE_ESP32_BLE_SERVER=false` disables the ESPHome BLE server. Use it only if the device does not need that BLE server.
+- `-DBTA_DM_LINK_POLICY_SETTINGS=0x000B` changes the Bluedroid link policy globally to omit Classic ACL sniff mode. Add it only if that behavior is specifically wanted; it is not a per-component setting.
 
 ## Installation
 
