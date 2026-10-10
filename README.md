@@ -34,7 +34,7 @@ These settings are complementary: `sdkconfig_options` enables the ESP-IDF featur
 The following flags are optional and are not required by this component:
 
 - `-DUSE_ESP32_BLE_SERVER=false` disables the ESPHome BLE server. Use it only if the device does not need that BLE server.
-- `-DBTA_DM_LINK_POLICY_SETTINGS=0x000B` changes the Bluedroid link policy globally to omit Classic ACL sniff mode. Add it only if that behavior is specifically wanted; it is not a per-component setting.
+- `-DBTA_DM_LINK_POLICY_SETTINGS=0x000B` changes the Bluedroid link policy globally to omit Classic ACL sniff mode. Add it only if that behavior is specifically wanted; it is not a per-component setting. **It might be necessary to override sleep that causes reboot.**
 
 ## Installation
 
