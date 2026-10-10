@@ -1,4 +1,3 @@
-
 #include "classic_bt.h"
 #include "esp32-hal-bt.h"
 #include "esp_spp_api.h"
@@ -18,7 +17,9 @@ static constexpr uint32_t CONNECT_TIMEOUT_MS = 10000;
 
 
 void ClassicBluetooth::setup() {
+  ESP_LOGI(TAG, "Initializing Classic Bluetooth SPP transport");
   if (!enabled_ || !address_valid_) {
+    ESP_LOGW(TAG, "Bluetooth transport disabled or remote address invalid");
     return;
   }
   start_bluetooth_();
@@ -26,6 +27,16 @@ void ClassicBluetooth::setup() {
 }
 
 void ClassicBluetooth::loop() {
+  if (!startup_status_logged_ && millis() >= 10000) {
+    startup_status_logged_ = true;
+    ESP_LOGI(
+        TAG,
+        "Startup status: started=%s, SPP ready=%s, connected=%s",
+        started_ ? "yes" : "no",
+        spp_ready_ ? "yes" : "no",
+        bluetooth_.connected() ? "yes" : "no");
+  }
+
   if (!enabled_ || !address_valid_) {
     return;
   }
