@@ -44,7 +44,6 @@ class ClassicBluetooth : public esphome::Component {
   bool connect_attempted_{false};
   bool auto_accept_pairing_{true};
   bool debug_logging_{false};
-  bool startup_status_logged_{false};
 
   uint32_t last_start_attempt_{0};
   uint32_t last_connect_attempt_{0};
